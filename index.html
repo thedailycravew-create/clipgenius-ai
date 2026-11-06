@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClipGenius AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:white;font-family:Arial,sans-serif;padding:22px}
+header{text-align:center;margin:25px 0 35px}
+.logo{font-size:30px;font-weight:bold;color:#8b9cff}
+p{color:#aab3c8;line-height:1.5}
+.card{background:#151d32;padding:20px;border-radius:16px;margin:18px 0}
+h2{font-size:21px}
+input,select{width:100%;padding:14px;margin:10px 0;background:#222d46;color:white;border:1px solid #394765;border-radius:9px}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:#6657ed;color:white;font-size:16px;font-weight:bold;margin-top:12px}
+button:disabled{opacity:.5}
+video{width:100%;margin-top:15px;border-radius:10px}
+.tag{color:#9cafff;font-size:13px}
+#status{color:#aab3c8;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ ClipGenius AI</div>
+<p>Turn Long Videos Into Short Clips</p>
+</header>
+
+<div class="card">
+<h2>Upload Your Video</h2>
+<p>Choose a video from your phone.</p>
+<input type="file" id="videoFile" accept="video/*">
+<video id="preview" controls hidden></video>
+<p id="duration"></p>
+</div>
+
+<div class="card">
+<h2>AI Editing Settings</h2>
+<label>Clip Duration</label>
+<select id="clipLength">
+<option value="30">30 Seconds</option>
+<option value="45">45 Seconds</option>
+<option value="60">60 Seconds</option>
+</select>
+
+<label>Video Format</label>
+<select id="format">
+<option value="9:16">9:16 Vertical</option>
+<option value="16:9">16:9 Landscape</option>
+</select>
+
+<label>Number of Clips</label>
+<select id="clipCount">
+<option value="5">5 Clips</option>
+<option value="10">10 Clips</option>
+</select>
+
+<button id="generate">✦ Generate Clips</button>
+<p id="status">Upload a video to get started.</p>
+</div>
+
+<div class="card">
+<h2>Your Clips</h2>
+<p id="results">Your generated clips will appear here.</p>
+<span class="tag">CLIPGENIUS AI • VIDEO STUDIO</span>
+</div>
+
+<script>
+const fileInput=document.getElementById('videoFile');
+const preview=document.getElementById('preview');
+const status=document.getElementById('status');
+const duration=document.getElementById('duration');
+
+fileInput.addEventListener('change',()=>{
+ const file=fileInput.files[0];
+ if(!file)return;
+ preview.src=URL.createObjectURL(file);
+ preview.hidden=false;
+ preview.onloadedmetadata=()=>{
+  duration.textContent="Video length: "+Math.floor(preview.duration)+" seconds";
+  status.textContent="Video ready. AI processing engine is the next step.";
+ };
+});
+
+document.getElementById('generate').addEventListener('click',()=>{
+ if(!fileInput.files.length){
+  status.textContent="Please upload a video first.";
+  return;
+ }
+ status.textContent="Upload successful. AI processing engine is not connected yet.";
+});
+</script>
+</body>
+</html>
